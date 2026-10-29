@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Cinema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0B0F19; --bg2:#111827; --nav:#0D1220; --card:#151B2B; --line:#334155; --line2:#334155; --soft:#111827;
+  --ink:#F8FAFC; --muted:#9CA3AF; --body:#9CA3AF;
+  --accent:#38BDF8; --accent-soft:rgba(56,189,248,.12); --cyan:#67E8F9; --purple:#A855F7; --orange:#FFB454; --btn-text:#111827;
+  --good:#FFB454; --good-soft:rgba(255,180,84,.12);
+  --grad:linear-gradient(90deg,#67E8F9 0%,#38BDF8 45%,#A855F7 100%);
+  --glow-blue:0 0 0 1px rgba(56,189,248,.45),0 0 16px rgba(56,189,248,.28);
+  --glow-cyan:0 0 14px rgba(103,232,249,.35);
+  --glow-purple:0 0 0 1px rgba(168,85,247,.45),0 0 22px rgba(168,85,247,.22);
+  --card-shadow:0 8px 24px rgba(56,189,248,.07);
+  --card-shadow-hover:0 14px 34px rgba(56,189,248,.22);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;font-size:15px;line-height:1.5;min-width:1280px}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+::placeholder{color:var(--muted);opacity:1}
+::selection{background:rgba(56,189,248,.35);color:var(--ink)}
+
+/* header */
+header{background:var(--nav);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(56,189,248,.08),0 8px 24px rgba(0,0,0,.35);position:sticky;top:0;z-index:20}
+.hbar{display:flex;align-items:center;gap:28px;padding:16px 32px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:var(--grad);color:var(--btn-text);box-shadow:var(--glow-cyan);display:flex;align-items:center;justify-content:center}
+.logo-text{font-size:22px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+.logo-text b{color:var(--accent);font-weight:800;text-shadow:0 0 12px rgba(56,189,248,.45)}
+nav.main{display:flex;gap:4px;font-weight:600;font-size:14px}
+nav.main a{padding:10px 14px;border-radius:10px}
+nav.main a{color:var(--ink)}
+nav.main a:hover{color:var(--accent)}
+nav.main a.on{background:var(--accent-soft);color:var(--cyan);box-shadow:var(--glow-blue);text-shadow:0 0 10px rgba(103,232,249,.45)}
+.search{flex:1;display:flex;align-items:center;gap:10px;height:46px;padding:0 16px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);transition:border-color .2s,box-shadow .2s}
+.search:focus-within{border-color:var(--accent);box-shadow:var(--glow-blue)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);outline:none}
+.btn{height:46px;padding:0 18px;display:inline-flex;align-items:center;gap:8px;border-radius:12px;font-weight:700;font-size:14px;border:0}
+.btn-dark{background:var(--nav);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(168,85,247,.6),0 0 18px rgba(168,85,247,.22)}.btn-dark:hover{color:var(--cyan);box-shadow:inset 0 0 0 1px rgba(103,232,249,.7),0 0 22px rgba(168,85,247,.32)}
+.btn-line{border:1px solid var(--line2);background:var(--bg2);color:var(--ink)}.btn-line:hover{border-color:var(--accent);color:var(--accent)}
+
+/* hero */
+.hero{margin-top:28px;background:var(--card);border:1px solid var(--line);box-shadow:0 0 0 1px rgba(168,85,247,.12),0 20px 60px rgba(56,189,248,.08);border-radius:28px;padding:48px;display:flex;gap:48px;align-items:center}
+.hero-text{flex:1 1 0;display:flex;flex-direction:column;gap:20px;min-width:0}
+.tags{display:flex;gap:8px;font-size:13px;font-weight:700}
+.tag{padding:6px 12px;border-radius:8px;background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.tag.acc{background:var(--grad);color:var(--btn-text);box-shadow:var(--glow-cyan)}
+.hero h1{margin:0;font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em}
+.hero .meta{margin:0;color:var(--muted);font-weight:600}
+.hero .desc{margin:0;max-width:520px;font-size:17px;color:var(--body)}
+.scores{display:flex;gap:24px}
+.score{display:flex;align-items:center;gap:10px}
+.score span:first-child{width:52px;height:52px;border-radius:14px;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.score small{font-size:13px;color:var(--muted);line-height:1.3}
+.cta{display:flex;gap:12px}
+.btn-lg{height:56px;padding:0 28px;border-radius:16px;font-size:15px}
+.btn-acc{background:var(--orange);color:var(--btn-text);box-shadow:0 0 18px rgba(255,180,84,.25)}.btn-acc:hover{color:var(--btn-text);filter:brightness(1.08)}
+.btn-soft{background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}.btn-soft:hover{color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),0 0 14px rgba(56,189,248,.2)}
+.icon-btn{width:56px;height:56px;border-radius:16px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);display:flex;align-items:center;justify-content:center}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+.icon-btn.saved{background:var(--orange);border-color:var(--orange);color:var(--btn-text);box-shadow:0 0 16px rgba(255,180,84,.3)}
+.slider-ctl{display:flex;align-items:center;gap:12px;padding-top:8px}
+.round{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);font-size:18px}.round:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow-blue)}
+.dots{display:flex;gap:6px}
+.dots button{width:8px;height:8px;border-radius:99px;border:0;background:var(--line);padding:0}
+.dots button.on{width:24px;background:var(--grad);box-shadow:var(--glow-cyan)}
+.hero-art{flex:1 1 0;display:flex;gap:16px;align-items:flex-end;justify-content:center;min-width:0}
+.poster{border-radius:22px;display:flex;flex-direction:column;justify-content:space-between;padding:20px;color:#F8FAFC;box-shadow:0 0 0 1px rgba(168,85,247,.35),0 18px 50px rgba(56,189,248,.18);transition:background .4s}
+.poster .q{align-self:flex-start;padding:4px 10px;border-radius:8px;background:#F8FAFC;color:var(--btn-text);font-size:12px;font-weight:800}
+.poster .ph{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.poster-main{width:50%;aspect-ratio:2/3}
+.poster-side{width:34%;aspect-ratio:2/3;border-radius:18px;opacity:.7;transition:background .4s}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chip{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:14px}.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--btn-text);box-shadow:0 0 16px rgba(255,180,84,.3)}
+
+/* sections */
+section.block{margin-top:56px}
+.shead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}
+.shead h2{margin:0;font-size:28px;font-weight:800;letter-spacing:-.03em}
+.shead a{font-weight:700;font-size:14px;color:var(--accent)}
+.grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:22px}
+.card{display:flex;flex-direction:column;gap:10px;background:none;border:0;padding:0;text-align:left;color:var(--ink)}
+.card .pic{aspect-ratio:2/3;border-radius:18px;padding:12px;display:flex;justify-content:space-between;align-items:flex-start;box-shadow:0 0 0 1px rgba(51,65,85,.6),var(--card-shadow);transition:transform .2s, box-shadow .2s}
+.card:hover .pic{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(56,189,248,.55),var(--card-shadow-hover)}
+.card:hover .t{color:var(--accent)}
+.badge{padding:4px 8px;border-radius:8px;font-size:12px;font-weight:800}
+.badge.w{background:#F8FAFC;color:var(--btn-text)}
+.badge.g{background:var(--orange);color:var(--btn-text)}
+.card .t{font-weight:700;font-size:15px}
+.card .m{font-size:13px;color:var(--muted)}
+.empty{grid-column:1/-1;padding:48px;border:1px dashed var(--line);border-radius:18px;text-align:center;color:var(--muted)}
+
+.two{display:flex;gap:24px;margin-top:56px}
+.panel{background:var(--card);border:1px solid var(--line);box-shadow:var(--card-shadow);border-radius:24px;padding:28px}
+.top{flex:0 0 420px}
+.top h2,.cols h2{margin:0 0 16px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.top ol{margin:0;padding:0;list-style:none}
+.top li button{width:100%;display:flex;align-items:center;gap:16px;padding:12px 0;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);text-align:left}
+.top li button:hover .tt{color:var(--accent)}
+.top .n{width:28px;font-size:22px;font-weight:800;color:var(--cyan);text-shadow:0 0 12px rgba(103,232,249,.45)}
+.top .th{width:44px;height:60px;border-radius:10px;flex:none;box-shadow:0 0 0 1px rgba(51,65,85,.7)}
+.top .tt{font-weight:700;display:block}
+.top .tm{font-size:13px;color:var(--muted)}
+.top .tr{margin-left:auto;font-weight:800;color:var(--good)}
+.cols{flex:1;display:flex;flex-direction:column}
+.colgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;flex:1}
+.col{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);transition:box-shadow .2s;border-radius:24px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:180px}
+.col:hover{color:var(--ink);box-shadow:inset 0 0 0 1px rgba(168,85,247,.6),0 0 22px rgba(168,85,247,.22)}
+.col small{font-size:13px;font-weight:700}
+.col strong{font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.scard .pic{aspect-ratio:16/9;align-items:flex-end;justify-content:flex-start;padding:14px}
+
+.promo{margin-top:64px;border-radius:28px;background:var(--bg2);box-shadow:inset 0 0 0 1px rgba(168,85,247,.5),inset 0 1px 0 rgba(103,232,249,.5),0 0 30px rgba(168,85,247,.18),0 0 60px rgba(56,189,248,.08);color:var(--ink);padding:48px;display:flex;gap:32px;align-items:center;justify-content:space-between}
+.promo h2{background:linear-gradient(90deg,#F8FAFC 0%,#67E8F9 60%,#A855F7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0;font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.1;max-width:720px}
+.promo p{margin:10px 0 0;color:var(--muted)}
+.promo .btn{background:var(--orange);color:var(--btn-text);box-shadow:0 0 18px rgba(255,180,84,.25);height:56px;padding:0 32px;border-radius:16px;font-weight:800}
+
+footer{background:var(--nav);margin-top:56px;padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px}
+footer nav{display:flex;gap:24px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(5,8,15,.78);display:none;align-items:center;justify-content:center;z-index:50;padding:40px}
+.modal.open{display:flex}
+.dialog{background:var(--card);box-shadow:inset 0 0 0 1px var(--line),0 0 0 1px rgba(168,85,247,.2),0 30px 80px rgba(0,0,0,.6),0 0 40px rgba(56,189,248,.12);border-radius:28px;width:min(1080px,100%);max-height:100%;overflow:auto;padding:36px;display:flex;gap:36px;position:relative}
+.dialog .mp{width:280px;flex:none;aspect-ratio:2/3;border-radius:20px;box-shadow:0 0 0 1px rgba(168,85,247,.35),var(--card-shadow-hover)}
+.dialog h3{margin:0;font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.dialog dl{display:grid;grid-template-columns:130px 1fr;gap:8px 20px;margin:0;font-size:14px}
+.dialog dt{color:var(--muted)}.dialog dd{margin:0}
+.player{margin-top:6px;aspect-ratio:16/9;border-radius:18px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.player .pb{width:76px;height:76px;border-radius:50%;border:0;background:var(--accent);color:var(--btn-text);box-shadow:0 0 24px rgba(56,189,248,.55);display:flex;align-items:center;justify-content:center}
+.player .bar{position:absolute;left:20px;right:20px;bottom:16px;height:4px;border-radius:4px;background:var(--line)}
+.player .bar i{display:block;height:100%;width:0;border-radius:4px;background:var(--grad);box-shadow:var(--glow-cyan);transition:width .6s}
+.player .lbl{position:absolute;left:20px;top:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.qrow{display:flex;gap:8px;flex-wrap:wrap}
+.qrow button{height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);font-weight:700;font-size:13px}.qrow button:hover{border-color:var(--accent);color:var(--accent)}
+.qrow button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--btn-text);box-shadow:0 0 14px rgba(255,180,84,.3)}
+.close{position:absolute;right:18px;top:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);font-size:20px}.close:hover{border-color:var(--accent);color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--bg2);color:var(--ink);box-shadow:var(--glow-blue);padding:12px 20px;border-radius:12px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar wrap">
+    <a href="#" class="logo" aria-label="World Cinema bosh sahifa">
+      <span class="logo-mark"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span>
+      <span class="logo-text">World <b>Cinema</b></span>
+    </a>
+    <nav class="main" aria-label="Asosiy menyu">
+      <a href="#" class="on">Filmlar</a>
+      <a href="#seriallar">Seriallar</a>
+      <a href="#">Multfilmlar</a>
+      <a href="#">Tarjima kinolar</a>
+      <a href="#top">Top 100</a>
+    </nav>
+    <label class="search">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <span class="sr">Qidiruv</span>
+      <input id="q" type="search" placeholder="Film, serial yoki aktyor nomi…" autocomplete="off">
+    </label>
+    <a href="#premium" class="btn btn-dark">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>Premium</a>
+    <button type="button" class="btn btn-line" data-toast="Kirish oynasi tez orada">Kirish</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-roledescription="slayder" aria-label="Premyeralar">
+    <div class="hero-text">
+      <div class="tags"><span class="tag acc">Premyera</span><span class="tag" id="h-q">4K · HDR</span><span class="tag">Oʻzbek tilida</span></div>
+      <h1 id="h-title"></h1>
+      <p class="meta" id="h-meta"></p>
+      <p class="desc">[Film tavsifi: 2–3 jumla. Asosiy syujet va nimasi bilan qiziq.]</p>
+      <div class="scores">
+        <div class="score"><span style="background:var(--good-soft);color:var(--good)">[0.0]</span><small>World Cinema<br>reytingi</small></div>
+        <div class="score"><span style="background:var(--accent-soft);color:var(--accent)">[0.0]</span><small>IMDb<br>reytingi</small></div>
+      </div>
+      <div class="cta">
+        <button type="button" class="btn btn-lg btn-acc" id="h-play"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Tomosha qilish</button>
+        <button type="button" class="btn btn-lg btn-soft" data-toast="Treyler tez orada qoʻshiladi">Treyler</button>
+        <button type="button" class="icon-btn" id="h-save" aria-pressed="false" aria-label="Saqlanganlarga qoʻshish"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+      </div>
+      <div class="slider-ctl">
+        <button type="button" class="round" id="prev" aria-label="Oldingi film">←</button>
+        <button type="button" class="round" id="next" aria-label="Keyingi film">→</button>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="poster-side" id="h-side"></div>
+      <div class="poster poster-main" id="h-poster"><span class="q">4K</span><span class="ph">[Poster 600×900]</span></div>
+    </div>
+  </section>
+
+  <div class="chips" id="chips" role="group" aria-label="Janr boʻyicha filtr"></div>
+
+  <section class="block">
+    <div class="shead"><h2 id="fresh-title">Yangi qoʻshilganlar</h2><a href="#">Barchasi →</a></div>
+    <div class="grid6" id="fresh"></div>
+  </section>
+
+  <div class="two" id="top">
+    <div class="panel top">
+      <h2>Hafta topi</h2>
+      <ol id="toplist"></ol>
+    </div>
+    <div class="cols">
+      <h2>Toʻplamlar</h2>
+      <div class="colgrid">
+        <a href="#" class="col" style="background:rgba(56,189,248,.10)"><small style="color:#38BDF8">24 ta film</small><strong>Oila bilan koʻrish uchun</strong></a>
+        <a href="#" class="col" style="background:rgba(255,180,84,.10)"><small style="color:#FFB454">18 ta film</small><strong>Oʻzbek kinosi durdonalari</strong></a>
+        <a href="#" class="col" style="background:rgba(103,232,249,.10)"><small style="color:#67E8F9">32 ta film</small><strong>Haqiqiy voqealar asosida</strong></a>
+        <a href="#" class="col" style="background:rgba(168,85,247,.12)"><small style="color:#D8B4FE">15 ta film</small><strong>Kosmos va kelajak</strong></a>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" id="seriallar">
+    <div class="shead"><h2>Mashhur seriallar</h2><a href="#">Barchasi →</a></div>
+    <div class="grid4" id="series"></div>
+  </section>
+
+  <section class="promo" id="premium">
+    <div>
+      <h2>Premium: reklamasiz, 4K va yangi filmlar birinchi boʻlib</h2>
+      <p>Birinchi 7 kun — bepul. [Shartlarni aniqlang]</p>
+    </div>
+    <button type="button" class="btn" data-toast="Toʻlov sahifasi tez orada">[NARX] soʻm / oy</button>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo-text">World <b>Cinema</b></span>
+    <nav aria-label="Pastki menyu"><a href="#">Biz haqimizda</a><a href="#">Reklama</a><a href="#">Mualliflik huquqi</a><a href="#">Aloqa</a></nav>
+    <span>© 2026 World Cinema</span>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="dialog">
+    <button type="button" class="close" id="m-close" aria-label="Yopish">×</button>
+    <div class="mp" id="m-pic"></div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:16px">
+      <div class="tags"><span class="tag" id="m-q"></span><span class="tag">Oʻzbek tilida</span><span class="badge g" style="align-self:center">[0.0]</span></div>
+      <h3 id="m-title"></h3>
+      <dl>
+        <dt>Yil</dt><dd id="m-year"></dd>
+        <dt>Janr</dt><dd id="m-genre"></dd>
+        <dt>Davlat</dt><dd>[Davlat]</dd>
+        <dt>Rejissyor</dt><dd>[Ism Familiya]</dd>
+      </dl>
+      <p style="margin:0;color:var(--body)">[Film tavsifi: 2–3 jumla.]</p>
+      <div class="player">
+        <span class="lbl">[Video pleyer]</span>
+        <button type="button" class="pb" id="m-play" aria-label="Ijro etish"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+        <div class="bar"><i id="m-bar"></i></div>
+      </div>
+      <div class="qrow" id="m-quality" role="group" aria-label="Sifat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  const films = [
+    {t:'Sukunat ortidagi shahar', y:2026, g:'Drama', q:'4K', bg:'#3D3A7A', side:'#B8B3E8', meta:'2026 · Drama, Triller · 2 soat 14 daq · 16+'},
+    {t:'Orbita 9', y:2026, g:'Fantastika', q:'4K', bg:'#1F3D5C', side:'#A9C4DE', meta:'2026 · Fantastika · 2 soat 02 daq · 12+'},
+    {t:'Qum soati', y:2025, g:'Drama', q:'FHD', bg:'#7A4A2A', side:'#E3C2A6', meta:'2025 · Drama · 1 soat 56 daq · 16+'},
+    {t:'Oxirgi karvon', y:2026, g:'Sarguzasht', q:'4K', bg:'#C9A27E'},
+    {t:'Shimoliy chiziq', y:2026, g:'Triller', q:'FHD', bg:'#7C93A8'},
+    {t:'Qizil anor bogʻi', y:2025, g:'Melodrama', q:'FHD', bg:'#B5636E'},
+    {t:'Kulrang xona', y:2026, g:'Detektiv', q:'HD', bg:'#8A8A93'},
+    {t:'Togʻlar ortida', y:2025, g:'Oilaviy', q:'4K', bg:'#7F9A6A'},
+    {t:'Yetti eshik', y:2026, g:'Fantastika', q:'FHD', bg:'#6E68B8'},
+    {t:'Yashil chiroq', y:2025, g:'Komediya', q:'FHD', bg:'#4F7A5C'},
+    {t:'Toʻyda koʻrishamiz', y:2026, g:'Komediya', q:'HD', bg:'#B07A5A'},
+    {t:'Jim koʻcha', y:2025, g:'Triller', q:'FHD', bg:'#4D4A63'},
+    {t:'Choʻl shamoli', y:2024, g:'Tarixiy', q:'FHD', bg:'#A07C4A'},
+    {t:'Qorongʻi oʻrmon', y:2026, g:'Qoʻrqinchli', q:'FHD', bg:'#3E4A3A'}
+  ];
+  const series = [
+    {t:'Toshkent. 3:00', y:2026, g:'Triller', q:'FHD', bg:'#3E4A6B', ep:'2-mavsum, 8-qism', m:'2 mavsum · Triller'},
+    {t:'Mahalla', y:2026, g:'Oilaviy', q:'FHD', bg:'#8C4A63', ep:'12 qism', m:'1 mavsum · Oilaviy'},
+    {t:'Choʻl shamoli', y:2024, g:'Tarixiy', q:'FHD', bg:'#A07C4A', ep:'Yangi qism', m:'3 mavsum · Tarixiy'},
+    {t:'Soyalar', y:2026, g:'Detektiv', q:'FHD', bg:'#4A4E5A', ep:'6 qism', m:'1 mavsum · Detektiv'}
+  ];
+  const genres = ['Hammasi','Jangari','Komediya','Drama','Fantastika','Qoʻrqinchli','Melodrama','Tarixiy','Triller','Detektiv','Oilaviy','Sarguzasht'];
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // toast
+  let tt;
+  function toast(msg){ const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); }
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-toast]'); if (b) { e.preventDefault(); toast(b.dataset.toast); } });
+
+  // hero slider
+  const slides = films.slice(0, 3);
+  let si = 0, saved = new Set(), timer;
+  try { saved = new Set(JSON.parse(localStorage.getItem('wc-saved') || '[]')); } catch (e) {}
+  slides.forEach((_, i) => { const d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', (i + 1) + '-slayd'); d.onclick = () => { go(i); restart(); }; $('dots').appendChild(d); });
+  function go(i){
+    si = (i + slides.length) % slides.length;
+    const s = slides[si];
+    $('h-title').textContent = s.t; $('h-meta').textContent = s.meta;
+    $('h-poster').style.background = s.bg; $('h-side').style.background = s.side;
+    [...$('dots').children].forEach((d, k) => d.classList.toggle('on', k === si));
+    const on = saved.has(s.t); $('h-save').classList.toggle('saved', on); $('h-save').setAttribute('aria-pressed', on);
+  }
+  function restart(){ clearInterval(timer); timer = setInterval(() => go(si + 1), 7000); }
+  $('prev').onclick = () => { go(si - 1); restart(); };
+  $('next').onclick = () => { go(si + 1); restart(); };
+  $('h-play').onclick = () => openFilm(slides[si]);
+  $('h-save').onclick = () => {
+    const t = slides[si].t;
+    if (saved.has(t)) { saved.delete(t); toast('Saqlanganlardan olib tashlandi'); } else { saved.add(t); toast('Saqlanganlarga qoʻshildi'); }
+    try { localStorage.setItem('wc-saved', JSON.stringify([...saved])); } catch (e) {}
+    go(si);
+  };
+  go(0); restart();
+
+  // chips + grid
+  let genre = 'Hammasi', query = '';
+  function renderChips(){
+    $('chips').innerHTML = genres.map((g) => `<button type="button" class="chip" aria-pressed="${g === genre}" data-g="${esc(g)}">${esc(g)}</button>`).join('');
+  }
+  $('chips').addEventListener('click', (e) => { const b = e.target.closest('[data-g]'); if (!b) return; genre = b.dataset.g; renderChips(); renderFresh(); });
+  $('q').addEventListener('input', (e) => { query = e.target.value.trim().toLowerCase(); renderFresh(); });
+
+  function card(f, i){
+    return `<button type="button" class="card" data-i="${i}">
+      <span class="pic" style="background:${f.bg}"><span class="badge w">${f.q}</span><span class="badge g">[0.0]</span></span>
+      <span><span class="t" style="display:block">${esc(f.t)}</span><span class="m">${f.y} · ${esc(f.g)}</span></span>
+    </button>`;
+  }
+  function renderFresh(){
+    let list = films.map((f, i) => [f, i]);
+    if (genre !== 'Hammasi') list = list.filter(([f]) => f.g === genre);
+    if (query) list = list.filter(([f]) => f.t.toLowerCase().includes(query) || f.g.toLowerCase().includes(query));
+    $('fresh-title').textContent = query ? `Qidiruv: “${$('q').value.trim()}”` : (genre === 'Hammasi' ? 'Yangi qoʻshilganlar' : genre);
+    $('fresh').innerHTML = list.length ? list.slice(0, 12).map(([f, i]) => card(f, i)).join('') : '<div class="empty">Hech narsa topilmadi. Boshqa janr yoki soʻz bilan urinib koʻring.</div>';
+  }
+  $('fresh').addEventListener('click', (e) => { const c = e.target.closest('[data-i]'); if (c) openFilm(films[+c.dataset.i]); });
+  renderChips(); renderFresh();
+
+  // top
+  const top = [0, 1, 9, 2, 4];
+  $('toplist').innerHTML = top.map((i, n) => { const f = films[i]; return `<li><button type="button" data-i="${i}">
+    <span class="n">${n + 1}</span><span class="th" style="background:${f.bg}"></span>
+    <span><span class="tt">${esc(f.t)}</span><span class="tm">${esc(f.g)} · ${f.y}</span></span><span class="tr">[0.0]</span></button></li>`; }).join('');
+  $('toplist').addEventListener('click', (e) => { const c = e.target.closest('[data-i]'); if (c) openFilm(films[+c.dataset.i]); });
+
+  // series
+  $('series').innerHTML = series.map((s, i) => `<button type="button" class="card scard" data-s="${i}">
+    <span class="pic" style="background:${s.bg}"><span class="badge w">${esc(s.ep)}</span></span>
+    <span><span class="t" style="display:block">${esc(s.t)}</span><span class="m">${esc(s.m)}</span></span></button>`).join('');
+  $('series').addEventListener('click', (e) => { const c = e.target.closest('[data-s]'); if (c) openFilm(series[+c.dataset.s]); });
+
+  // modal
+  const qualities = ['2160p 4K', '1080p', '720p', '480p'];
+  let quality = '1080p', lastFocus;
+  function renderQ(){ $('m-quality').innerHTML = qualities.map((q) => `<button type="button" aria-pressed="${q === quality}" data-q="${q}">${q}</button>`).join(''); }
+  $('m-quality').addEventListener('click', (e) => { const b = e.target.closest('[data-q]'); if (b) { quality = b.dataset.q; renderQ(); } });
+  function openFilm(f){
+    lastFocus = document.activeElement;
+    $('m-title').textContent = f.t; $('m-year').textContent = f.y; $('m-genre').textContent = f.g; $('m-q').textContent = f.q;
+    $('m-pic').style.background = f.bg; $('m-bar').style.width = '0';
+    renderQ(); $('modal').classList.add('open'); $('m-close').focus();
+  }
+  function closeFilm(){ $('modal').classList.remove('open'); if (lastFocus) lastFocus.focus(); }
+  $('m-close').onclick = closeFilm;
+  $('modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeFilm(); });
+  $('modal').addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFilm(); });
+  $('m-play').onclick = () => { $('m-bar').style.width = '12%'; toast('Video manbasi ulanmagan — ' + quality); };
+})();
+</script>
+</body>
+</html>
