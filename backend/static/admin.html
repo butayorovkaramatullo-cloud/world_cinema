@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Cinema — Admin panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0F19;--bg2:#111827;--nav:#0D1220;--card:#151B2B;--line:#334155;--ink:#F8FAFC;--muted:#9CA3AF;--accent:#38BDF8;--cyan:#67E8F9;--purple:#A855F7;--orange:#FFB454;--btn-text:#111827;--danger:#F87171}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;font-size:14px;line-height:1.5;min-width:1100px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{background:var(--nav);border-bottom:1px solid var(--line);padding:16px 32px;display:flex;align-items:center;gap:24px}
+.logo{font-size:20px;font-weight:800;letter-spacing:-.03em}.logo b{color:var(--accent)}
+.tag{padding:4px 10px;border-radius:8px;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;font-weight:700;color:var(--muted)}
+header .sp{flex:1}
+main{max-width:1320px;margin:0 auto;padding:28px 32px 64px}
+.card{background:var(--card);border-radius:20px;box-shadow:inset 0 0 0 1px var(--line);padding:24px}
+.btn{height:42px;padding:0 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line)}
+.btn:hover{color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.btn.pri{background:var(--orange);color:var(--btn-text);box-shadow:0 0 16px rgba(255,180,84,.25)}
+.btn.pri:hover{filter:brightness(1.08);color:var(--btn-text)}
+.btn.sm{height:34px;padding:0 12px;border-radius:9px;font-size:13px}
+.btn.del:hover{color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:13px;color:var(--muted)}
+input,select,textarea{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink)}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.2);outline:none}
+textarea{min-height:96px;resize:vertical}
+.check{flex-direction:row;align-items:center;gap:8px;color:var(--ink);font-weight:600}
+.check input{width:18px;height:18px;accent-color:var(--orange)}
+#login{max-width:420px;margin:12vh auto 0;display:flex;flex-direction:column;gap:16px}
+h1,h2{margin:0;letter-spacing:-.02em}
+.err{color:var(--danger);min-height:20px;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-bottom:24px}
+.stat .n{font-size:28px;font-weight:800}.stat .l{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs button{height:40px;padding:0 16px;border-radius:999px;border:0;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);font-weight:700;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--orange);color:var(--btn-text);box-shadow:0 0 14px rgba(255,180,84,.3)}
+.row{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:12px;border-bottom:1px solid #1F2937;vertical-align:middle}
+tr:hover td{background:rgba(56,189,248,.04)}
+.sw{width:32px;height:44px;border-radius:6px;display:inline-block;vertical-align:middle;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);background-size:cover;background-position:center}
+.pill{padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line)}
+.pill.o{background:rgba(255,180,84,.14);color:var(--orange);box-shadow:none}
+.pill.b{background:rgba(56,189,248,.14);color:var(--accent);box-shadow:none}
+.pill.p{background:rgba(168,85,247,.16);color:#D8B4FE;box-shadow:none}
+.acts{display:flex;gap:6px;justify-content:flex-end}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.span2{grid-column:span 2}.span4{grid-column:1/-1}
+.genres{display:flex;flex-wrap:wrap;gap:10px 18px}
+dialog{background:var(--card);color:var(--ink);border:0;border-radius:24px;padding:28px;width:min(1000px,94vw);box-shadow:0 0 0 1px rgba(168,85,247,.3),0 30px 80px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(5,8,15,.75)}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.foot{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.empty{padding:32px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--bg2);box-shadow:0 0 0 1px rgba(56,189,248,.45),0 0 16px rgba(56,189,248,.28);padding:12px 20px;border-radius:12px;font-weight:600;opacity:0;transition:.2s;pointer-events:none}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">World <b>Cinema</b></span><span class="tag">Admin panel</span>
+  <span class="sp"></span>
+  <span id="who" style="color:var(--muted)"></span>
+  <button type="button" class="btn sm" id="logout" hidden>Chiqish</button>
+</header>
+
+<main>
+  <form id="login" class="card" hidden>
+    <h1>Admin sifatida kirish</h1>
+    <label>Email<input type="email" name="email" required autocomplete="username"></label>
+    <label>Parol<input type="password" name="password" required autocomplete="current-password"></label>
+    <div class="err" id="login-err" role="alert"></div>
+    <button type="submit" class="btn pri">Kirish</button>
+  </form>
+
+  <div id="app" hidden>
+    <div class="stats" id="stats"></div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="films" aria-selected="true">Filmlar</button>
+      <button type="button" role="tab" data-tab="genres" aria-selected="false">Janrlar</button>
+      <button type="button" role="tab" data-tab="users" aria-selected="false">Foydalanuvchilar</button>
+      <button type="button" role="tab" data-tab="payments" aria-selected="false">Toʻlovlar</button>
+    </div>
+
+    <section class="card" data-panel="films">
+      <div class="row">
+        <h2 style="flex:1">Filmlar</h2>
+        <input type="search" id="film-q" placeholder="Nomi boʻyicha qidirish" aria-label="Filmlarni qidirish" style="width:280px">
+        <button type="button" class="btn pri" id="add-film">+ Film qoʻshish</button>
+      </div>
+      <table><thead><tr><th></th><th>Nomi</th><th>Turi</th><th>Yil</th><th>Janrlar</th><th>Sifat</th><th>Belgilar</th><th>Koʻrishlar</th><th></th></tr></thead><tbody id="films"></tbody></table>
+    </section>
+
+    <section class="card" data-panel="genres" hidden>
+      <form class="row" id="genre-form">
+        <h2 style="flex:1">Janrlar</h2>
+        <input name="name" placeholder="Yangi janr nomi" aria-label="Yangi janr nomi" required minlength="2" style="width:260px">
+        <button type="submit" class="btn pri">Qoʻshish</button>
+      </form>
+      <table><thead><tr><th>Nomi</th><th>Slug</th><th></th></tr></thead><tbody id="genres"></tbody></table>
+    </section>
+
+    <section class="card" data-panel="users" hidden>
+      <h2 style="margin-bottom:16px">Foydalanuvchilar</h2>
+      <table><thead><tr><th>Ism</th><th>Email</th><th>Holat</th><th>Premium</th><th>Roʻyxatdan oʻtgan</th><th></th></tr></thead><tbody id="users"></tbody></table>
+    </section>
+
+    <section class="card" data-panel="payments" hidden>
+      <h2 style="margin-bottom:16px">Toʻlovlar</h2>
+      <table><thead><tr><th>#</th><th>Foydalanuvchi ID</th><th>Tarif</th><th>Summa</th><th>Provayder</th><th>Holat</th><th>Sana</th></tr></thead><tbody id="payments"></tbody></table>
+    </section>
+  </div>
+</main>
+
+<dialog id="film-dlg" aria-labelledby="film-dlg-title">
+  <form id="film-form" method="dialog">
+    <div class="dh"><h2 id="film-dlg-title">Film</h2><button type="button" class="btn sm" data-close>Yopish</button></div>
+    <div class="grid">
+      <label class="span2">Nomi *<input name="title" required maxlength="200"></label>
+      <label class="span2">Asl nomi<input name="original_title" maxlength="200"></label>
+      <label>Turi<select name="kind"><option value="film">Film</option><option value="serial">Serial</option><option value="multfilm">Multfilm</option></select></label>
+      <label>Yil<input name="year" type="number" min="1888" max="2100"></label>
+      <label>Sifat<select name="quality"><option>HD</option><option selected>FHD</option><option>4K</option></select></label>
+      <label>Yosh chegarasi<input name="age_rating" placeholder="16+" maxlength="10"></label>
+      <label>Davlat<input name="country" maxlength="80"></label>
+      <label>Rejissyor<input name="director" maxlength="120"></label>
+      <label>Davomiyligi (daqiqa)<input name="duration_min" type="number" min="1" max="1000"></label>
+      <label>Til<input name="language" value="Oʻzbek tilida" maxlength="40"></label>
+      <label>Sayt reytingi (0–10)<input name="rating" type="number" step="0.1" min="0" max="10"></label>
+      <label>IMDb (0–10)<input name="imdb_rating" type="number" step="0.1" min="0" max="10"></label>
+      <label>Mavsumlar<input name="seasons" type="number" min="1"></label>
+      <label>Qismlar<input name="episodes" type="number" min="1"></label>
+      <label class="span2">Poster URL<input name="poster_url" type="url" maxlength="500" placeholder="https://…"></label>
+      <label class="span2">Backdrop URL<input name="backdrop_url" type="url" maxlength="500" placeholder="https://…"></label>
+      <label class="span2">Treyler (YouTube yoki Vimeo)<input name="trailer_url" type="url" maxlength="500" placeholder="https://www.youtube.com/watch?v=…"></label>
+      <label>Poster rangi (rasm yoʻq paytda)<input name="poster_color" type="color" value="#3D3A7A"></label>
+      <label>Slug (ixtiyoriy)<input name="slug" maxlength="220" placeholder="avtomatik"></label>
+      <label class="span4">Tavsif<textarea name="description"></textarea></label>
+      <fieldset class="span4" style="border:0;padding:0;margin:0">
+        <legend style="font-weight:600;font-size:13px;color:var(--muted);margin-bottom:8px">Janrlar</legend>
+        <div class="genres" id="genre-checks"></div>
+      </fieldset>
+      <div class="span4" style="display:flex;gap:24px">
+        <label class="check"><input type="checkbox" name="is_featured"> Bosh sahifa banneri</label>
+        <label class="check"><input type="checkbox" name="is_premium"> Faqat Premium</label>
+        <label class="check"><input type="checkbox" name="is_published" checked> Saytda koʻrinadi</label>
+      </div>
+    </div>
+    <div class="err" id="film-err" role="alert" style="margin-top:12px"></div>
+    <div class="foot"><button type="button" class="btn" data-close>Bekor qilish</button><button type="submit" class="btn pri">Saqlash</button></div>
+  </form>
+</dialog>
+
+<dialog id="confirm-dlg" aria-labelledby="confirm-title" style="width:420px">
+  <h2 id="confirm-title" style="margin-bottom:8px">Oʻchirishni tasdiqlang</h2>
+  <p id="confirm-text" style="color:var(--muted)"></p>
+  <div class="foot"><button type="button" class="btn" id="confirm-no">Bekor qilish</button><button type="button" class="btn pri" id="confirm-yes">Oʻchirish</button></div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const API = '';  // admin panel API bilan bir serverda ishlaydi
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtDate = (d) => d ? new Date(d).toLocaleDateString('uz-UZ') : '—';
+  const fmtSum = (n) => Number(n || 0).toLocaleString('ru-RU') + ' soʻm';
+  let token = null, genres = [], films = [], editingId = null;
+  try { token = sessionStorage.getItem('wc-admin-token'); } catch (e) {}
+
+  let tt;
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2400); }
+
+  async function api(path, opts = {}) {
+    const res = await fetch(API + path, {
+      ...opts,
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(opts.headers || {}) },
+    });
+    if (res.status === 401) { logout(); throw new Error('Sessiya tugadi, qayta kiring'); }
+    if (res.status === 204) return null;
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      const d = data && data.detail;
+      throw new Error(Array.isArray(d) ? d.map((x) => (x.loc ? x.loc.slice(-1)[0] + ': ' : '') + x.msg).join('; ') : (d || 'Xatolik: ' + res.status));
+    }
+    return data;
+  }
+
+  function show(loggedIn) {
+    $('#login').hidden = loggedIn; $('#app').hidden = !loggedIn; $('#logout').hidden = !loggedIn;
+  }
+  function logout() {
+    token = null; try { sessionStorage.removeItem('wc-admin-token'); } catch (e) {}
+    $('#who').textContent = ''; show(false);
+  }
+  $('#logout').onclick = logout;
+
+  $('#login').addEventListener('submit', async (e) => {
+    e.preventDefault(); $('#login-err').textContent = '';
+    const f = new FormData(e.target);
+    try {
+      const out = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: f.get('email'), password: f.get('password') }) });
+      if (!out.user.is_admin) throw new Error('Bu hisobda admin huquqi yoʻq');
+      token = out.access_token; try { sessionStorage.setItem('wc-admin-token', token); } catch (e) {}
+      start(out.user);
+    } catch (err) { $('#login-err').textContent = err.message; }
+  });
+
+  async function start(user) {
+    if (!user) {
+      try { user = await api('/api/auth/me'); } catch (e) { return logout(); }
+      if (!user.is_admin) return logout();
+    }
+    $('#who').textContent = user.name + ' · ' + user.email;
+    show(true);
+    await Promise.all([loadStats(), loadGenres(), loadFilms()]);
+  }
+
+  // Tabs
+  document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-tab]').forEach((x) => x.setAttribute('aria-selected', x === b));
+    document.querySelectorAll('[data-panel]').forEach((p) => p.hidden = p.dataset.panel !== b.dataset.tab);
+    if (b.dataset.tab === 'users') loadUsers();
+    if (b.dataset.tab === 'payments') loadPayments();
+  }));
+
+  async function loadStats() {
+    const s = await api('/api/admin/stats');
+    const items = [['Filmlar', s.films], ['Foydalanuvchilar', s.users], ['Premium', s.premium_users], ['Toʻlovlar', s.paid_payments], ['Tushum', fmtSum(s.revenue_uzs)]];
+    $('#stats').innerHTML = items.map(([l, n]) => `<div class="card stat"><div class="n">${esc(n)}</div><div class="l">${esc(l)}</div></div>`).join('');
+  }
+
+  async function loadGenres() {
+    genres = await api('/api/genres');
+    $('#genres').innerHTML = genres.length ? genres.map((g) => `<tr><td>${esc(g.name)}</td><td style="color:var(--muted)">${esc(g.slug)}</td>
+      <td><div class="acts"><button type="button" class="btn sm del" data-del-genre="${g.id}" data-name="${esc(g.name)}">Oʻchirish</button></div></td></tr>`).join('')
+      : '<tr><td colspan="3" class="empty">Janrlar yoʻq</td></tr>';
+    $('#genre-checks').innerHTML = genres.map((g) => `<label class="check"><input type="checkbox" name="genre" value="${g.id}"> ${esc(g.name)}</label>`).join('');
+  }
+  $('#genre-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try { await api('/api/admin/genres', { method: 'POST', body: JSON.stringify({ name: e.target.name.value }) }); e.target.reset(); toast('Janr qoʻshildi'); loadGenres(); }
+    catch (err) { toast(err.message); }
+  });
+
+  let qTimer;
+  $('#film-q').addEventListener('input', () => { clearTimeout(qTimer); qTimer = setTimeout(loadFilms, 250); });
+  async function loadFilms() {
+    const q = $('#film-q').value.trim();
+    films = await api('/api/admin/films' + (q ? '?q=' + encodeURIComponent(q) : ''));
+    $('#films').innerHTML = films.length ? films.map((f) => {
+      const pic = f.poster_url ? `background-image:url('${esc(encodeURI(f.poster_url))}')` : `background:${esc(f.poster_color || '#334155')}`;
+      const flags = [f.is_featured && '<span class="pill b">Banner</span>', f.is_premium && '<span class="pill o">Premium</span>', !f.is_published && '<span class="pill">Yashirin</span>', f.trailer_embed_url && '<span class="pill p">Treyler</span>'].filter(Boolean).join(' ');
+      return `<tr><td><span class="sw" style="${pic}"></span></td><td><b>${esc(f.title)}</b><div style="color:var(--muted);font-size:12px">${esc(f.slug)}</div></td>
+        <td>${esc(f.kind)}</td><td>${esc(f.year ?? '—')}</td><td>${esc(f.genres.map((g) => g.name).join(', ') || '—')}</td><td>${esc(f.quality)}</td><td>${flags || '—'}</td><td>${esc(f.views)}</td>
+        <td><div class="acts"><button type="button" class="btn sm" data-edit="${f.id}">Tahrirlash</button><button type="button" class="btn sm del" data-del-film="${f.id}" data-name="${esc(f.title)}">Oʻchirish</button></div></td></tr>`;
+    }).join('') : '<tr><td colspan="9" class="empty">Film topilmadi</td></tr>';
+  }
+
+  // Film form
+  const dlg = $('#film-dlg'), form = $('#film-form');
+  const NUM = ['year', 'duration_min', 'rating', 'imdb_rating', 'seasons', 'episodes'];
+  const TEXT = ['title', 'original_title', 'slug', 'kind', 'quality', 'age_rating', 'country', 'director', 'language', 'poster_url', 'backdrop_url', 'trailer_url', 'poster_color', 'description'];
+  const BOOL = ['is_featured', 'is_premium', 'is_published'];
+  function openFilm(f) {
+    editingId = f ? f.id : null; form.reset(); $('#film-err').textContent = '';
+    $('#film-dlg-title').textContent = f ? 'Filmni tahrirlash' : 'Yangi film';
+    if (f) {
+      [...TEXT, ...NUM].forEach((k) => { if (form.elements[k]) form.elements[k].value = f[k] ?? ''; });
+      if (!f.poster_color) form.elements.poster_color.value = '#3D3A7A';
+      BOOL.forEach((k) => form.elements[k].checked = !!f[k]);
+      const ids = new Set(f.genres.map((g) => g.id));
+      form.querySelectorAll('[name="genre"]').forEach((c) => c.checked = ids.has(+c.value));
+    }
+    dlg.showModal(); form.elements.title.focus();
+  }
+  $('#add-film').onclick = () => openFilm(null);
+  dlg.querySelectorAll('[data-close]').forEach((b) => b.onclick = () => dlg.close());
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); $('#film-err').textContent = '';
+    const body = {};
+    TEXT.forEach((k) => { const v = form.elements[k].value.trim(); body[k] = v === '' ? null : v; });
+    NUM.forEach((k) => { const v = form.elements[k].value; body[k] = v === '' ? null : Number(v); });
+    BOOL.forEach((k) => body[k] = form.elements[k].checked);
+    body.kind = body.kind || 'film'; body.quality = body.quality || 'FHD'; body.language = body.language || 'Oʻzbek tilida';
+    body.genre_ids = [...form.querySelectorAll('[name="genre"]:checked')].map((c) => +c.value);
+    try {
+      await api(editingId ? '/api/admin/films/' + editingId : '/api/admin/films', { method: editingId ? 'PUT' : 'POST', body: JSON.stringify(body) });
+      dlg.close(); toast(editingId ? 'Film yangilandi' : 'Film qoʻshildi'); loadFilms(); loadStats();
+    } catch (err) { $('#film-err').textContent = err.message; }
+  });
+
+  // Confirm delete
+  const cdlg = $('#confirm-dlg'); let pending = null;
+  function confirmDelete(text, fn) { $('#confirm-text').textContent = text; pending = fn; cdlg.showModal(); }
+  $('#confirm-no').onclick = () => cdlg.close();
+  $('#confirm-yes').onclick = async () => { cdlg.close(); try { await pending(); } catch (err) { toast(err.message); } };
+
+  document.addEventListener('click', (e) => {
+    const ed = e.target.closest('[data-edit]');
+    if (ed) return openFilm(films.find((f) => f.id === +ed.dataset.edit));
+    const df = e.target.closest('[data-del-film]');
+    if (df) return confirmDelete(`“${df.dataset.name}” filmi butunlay oʻchiriladi.`, async () => { await api('/api/admin/films/' + df.dataset.delFilm, { method: 'DELETE' }); toast('Film oʻchirildi'); loadFilms(); loadStats(); });
+    const dg = e.target.closest('[data-del-genre]');
+    if (dg) return confirmDelete(`“${dg.dataset.name}” janri oʻchiriladi (filmlardan ham olib tashlanadi).`, async () => { await api('/api/admin/genres/' + dg.dataset.delGenre, { method: 'DELETE' }); toast('Janr oʻchirildi'); loadGenres(); loadFilms(); });
+    const bu = e.target.closest('[data-block]');
+    if (bu) return (async () => { try { await api(`/api/admin/users/${bu.dataset.block}?is_active=${bu.dataset.active === 'true' ? 'false' : 'true'}`, { method: 'PATCH' }); loadUsers(); } catch (err) { toast(err.message); } })();
+  });
+
+  async function loadUsers() {
+    const list = await api('/api/admin/users');
+    $('#users').innerHTML = list.length ? list.map((u) => `<tr><td><b>${esc(u.name)}</b> ${u.is_admin ? '<span class="pill b">Admin</span>' : ''}</td><td>${esc(u.email)}</td>
+      <td>${u.is_active === false ? '<span class="pill">Bloklangan</span>' : 'Faol'}</td>
+      <td>${u.is_premium ? '<span class="pill o">' + esc(fmtDate(u.premium_until)) + ' gacha</span>' : '—'}</td><td>${esc(fmtDate(u.created_at))}</td>
+      <td><div class="acts">${u.is_admin ? '' : `<button type="button" class="btn sm del" data-block="${u.id}" data-active="${u.is_active !== false}">${u.is_active === false ? 'Blokdan chiqarish' : 'Bloklash'}</button>`}</div></td></tr>`).join('')
+      : '<tr><td colspan="6" class="empty">Foydalanuvchilar yoʻq</td></tr>';
+  }
+
+  async function loadPayments() {
+    const list = await api('/api/admin/payments');
+    const pill = { paid: 'o', pending: 'b', cancelled: '' };
+    $('#payments').innerHTML = list.length ? list.map((p) => `<tr><td>${p.id}</td><td>${p.user_id}</td><td>${esc(p.plan.name)}</td><td>${esc(fmtSum(p.amount_uzs))}</td>
+      <td>${esc(p.provider)}</td><td><span class="pill ${pill[p.status] || ''}">${esc(p.status)}</span></td><td>${esc(fmtDate(p.created_at))}</td></tr>`).join('')
+      : '<tr><td colspan="7" class="empty">Toʻlovlar yoʻq</td></tr>';
+  }
+
+  token ? start() : show(false);
+})();
+</script>
+</body>
+</html>
